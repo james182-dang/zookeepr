@@ -10,6 +10,9 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
+// allow files in public folder to be connected without using explicit routes,
+// this allows the styling and any related files to be connected easily
+app.use(express.static('public'));
 
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
@@ -82,7 +85,7 @@ function validateAnimal(animal) {
 };
 
 
-// Routes
+// Routes!
 app.get('/api/animals', (req, res) => {
     let results = animals;
     if (req.query) {
@@ -98,6 +101,23 @@ app.get('/api/animals/:id', (req, res) => {
     } else {
         res.send(404);
     }
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+//Wildcard route!
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 // POST
