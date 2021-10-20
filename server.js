@@ -13,12 +13,14 @@ app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
 
-app.use('/api', apiRoutes);
-app.use('/', htmlRoutes);
-
 // allow files in public folder to be connected without using explicit routes,
 // this allows the styling and any related files to be connected easily
 app.use(express.static('public'));
+
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
+
+
 
 
 
